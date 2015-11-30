@@ -1,0 +1,10 @@
+put();
+right();
+walk();
+put();
+left();
+walk();
+put();
+left();
+walk();
+put();
