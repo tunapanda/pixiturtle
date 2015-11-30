@@ -21,10 +21,15 @@ function PixiTurtle() {
 
 	this.bundleLoader.load(script);
 
-	this.distance = 100;
+	this.distance = 20;
+	this.delay = 500;
+
+	if (BrowserUtil.getQueryStringParams().size)
+		this.distance = BrowserUtil.getQueryStringParams().size;
 
 	this.turtle = new Turtle();
 	this.turtle.distance = this.distance;
+	this.turtle.delay = this.delay;
 	this.addChild(this.turtle);
 	this.turtle.x = 100;
 	this.turtle.y = 100;
@@ -34,6 +39,11 @@ function PixiTurtle() {
 inherits(PixiTurtle, PixiApp);
 
 PixiTurtle.prototype.nextInstruction = function() {
+	this.delay -= 10;
+	if (this.delay < 0)
+		this.delay = 0;
+	this.turtle.delay = this.delay;
+
 	if (!this.instructions.length) {
 		this.turtle.visible = false;
 		console.log("done");
@@ -69,7 +79,7 @@ PixiTurtle.prototype.nextInstruction = function() {
 			var tween = new TWEEN.Tween(g);
 			tween.to({
 				alpha: 1
-			}, 500);
+			}, this.delay);
 			tween.onComplete(function() {
 				this.nextInstruction();
 			}.bind(this));

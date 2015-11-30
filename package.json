@@ -10,6 +10,7 @@
     "inherits": "^2.0.1",
     "pixi.js": "^3.0.8",
     "pixiapp": "^3.0.1",
+    "pngjs2": "^2.0.0",
     "tween.js": "^16.3.1"
   },
   "devDependencies": {

@@ -29,7 +29,7 @@ Turtle.prototype.walk = function() {
 	tween.to({
 		x: this.x + Math.cos(this.rotation) * this.distance,
 		y: this.y + Math.sin(this.rotation) * this.distance
-	}, 500);
+	}, this.delay);
 	tween.onComplete(function() {
 		thenable.resolve();
 	});
@@ -46,7 +46,7 @@ Turtle.prototype.rotate = function(deg) {
 	var tween = new TWEEN.Tween(this);
 	tween.to({
 		rotation: this.rotation + rad
-	}, 500);
+	}, this.delay);
 	tween.onComplete(function() {
 		thenable.resolve();
 	});
