@@ -30157,9 +30157,9 @@ function PixiTurtle() {
 	console.log("script: " + script);
 
 	this.bundleLoader = new BundleLoader();
-	this.bundleLoader.onload = function() {
+	/*this.bundleLoader.onload = function() {
 		setTimeout(this.nextInstruction.bind(this), 1000);
-	}.bind(this);
+	}.bind(this);*/
 
 	this.bundleLoader.load(script);
 
@@ -30176,9 +30176,23 @@ function PixiTurtle() {
 	this.turtle.x = 100;
 	this.turtle.y = 100;
 	this.instructions = [];
+	this.instructionIndex = 0;
+
+	window.onkeypress = this.onKeyPress.bind(this);
 }
 
 inherits(PixiTurtle, PixiApp);
+
+PixiTurtle.prototype.onKeyPress = function(ev) {
+	var key = String.fromCharCode(ev.charCode).toLowerCase();
+
+	switch (key) {
+		case " ":
+			this.instructionIndex = 0;
+			this.nextInstruction();
+			break;
+	}
+}
 
 PixiTurtle.prototype.nextInstruction = function() {
 	this.delay -= 10;
@@ -30186,13 +30200,14 @@ PixiTurtle.prototype.nextInstruction = function() {
 		this.delay = 0;
 	this.turtle.delay = this.delay;
 
-	if (!this.instructions.length) {
+	if (this.instructionIndex >= this.instructions.length) {
 		this.turtle.visible = false;
 		console.log("done");
 		return;
 	}
 
-	var instruction = this.instructions.shift();
+	var instruction = this.instructions[this.instructionIndex];
+	this.instructionIndex++;
 
 	switch (instruction) {
 		case "walk":
